@@ -1,0 +1,5 @@
+=============
+edi.skillpill
+=============
+
+User documentation
