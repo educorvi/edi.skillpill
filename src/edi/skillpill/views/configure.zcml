@@ -1,0 +1,18 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="edi.skillpill">
+
+  -*- extra stuff goes here -*-
+
+  <browser:page
+    name="skill-view"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".skill_view.SkillView"
+    template="skill_view.pt"
+    permission="zope2.View"
+    />
+
+
+</configure>
