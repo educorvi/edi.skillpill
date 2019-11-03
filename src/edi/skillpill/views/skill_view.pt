@@ -10,7 +10,7 @@
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
 
-      <div class="container">
+      <div tal:define="quiz view/get_quiz" class="container">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -28,13 +28,15 @@
           </div>
         </div>
 
+        <a class="anchor" tal:condition="view/get_validated" id="ergebnis"> </a>
 
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+
+	<button tal:condition="not:view/get_validated" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 	  Quiz starten
 	</button>
 
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div tal:define="quiz view/get_quiz" class="modal-dialog" role="document">
+	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 		<h5 class="modal-title" id="exampleModalLabel">Quiz beantworten</h5>
@@ -55,7 +57,7 @@
 			</div>-->
 
 			<div class="card mb-3">
-			  <img tal:condition="quiz/image" src="..." class="card-img-top" alt="..." tal:attributes="src quiz/image;alt context/title">
+			  <img tal:condition="quiz/image" class="card-img-top" tal:attributes="src quiz/image;alt context/title">
 			  <div class="card-body">
 			    <h3 class="card-title" tal:content="quiz/frage">Card title</h3>
 			  </div>
@@ -70,7 +72,7 @@
 			  <div class="row">
                             <div tal:repeat="antwort quiz/antworten" class="col-6 mb-1">
                               <button style="min-height:60px;" type="submit" class="btn btn-info btn-sm btn-block" 
-                                      name="quiz" tal:attributes="value python:antwort[0]" tal:content="python:antwort[1]"></button>
+                                      tal:attributes="name quiz/uid;value python:antwort[0]" tal:content="python:antwort[1]"></button>
                             </div>
 			  </div>
                         </form>
@@ -78,15 +80,28 @@
 		    </div>
 		  </div>
 		</div>
-
-	      <!--<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		<button type="button" class="btn btn-primary">Save changes</button>
-	      </div>-->
 	    </div>
 	  </div>
 	</div>
 
+        <div tal:define="validated view/get_validated" tal:condition="validated" class="row">
+          <div class="col-sm-5 col-12">
+
+		<div class="card">
+                  <img tal:condition="quiz/image" class="card-img-top" tal:attributes="src quiz/image;alt context/title">
+		  <div class="card-body">
+		    <h5 class="card-title" tal:content="quiz/frage">Card title</h5>
+                    <div class="row">
+                      <div tal:repeat="antwort validated" class="col-6 mb-1">
+                        <button style="min-height:60px;" type="button" tal:attributes="class antwort/btnclass" disabled>
+                          <span tal:replace="antwort/antwort"/> <span tal:condition="antwort/yours" class="ml-2 badge badge-light">Du</span>
+                        </button>
+                      </div>
+                    </div>
+		  </div>
+		</div>
+          </div>
+        </div>
 
         <div tal:replace="structure provider:plone.belowcontentbody" />
 
