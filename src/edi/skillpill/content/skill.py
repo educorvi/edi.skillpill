@@ -7,16 +7,11 @@ from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from plone.autoform import directives
 from plone.dexterity.content import Container
 from plone.namedfile.field import NamedBlobImage
-# from plone.namedfile import field as namedfile
 from plone.supermodel import model
-# from plone.supermodel.directives import fieldset
-# from z3c.form.browser.radio import RadioFieldWidget
 from zope import schema
 from zope.interface import implementer
-
-
-# from edi.skillpill import _
-
+from zope.interface import Invalid
+from zope.interface import invariant
 
 wertvalues = SimpleVocabulary(
     [SimpleTerm(value=u'falsch', token=u'falsch', title=u'falsch'),
@@ -25,6 +20,23 @@ wertvalues = SimpleVocabulary(
 
 values = [5,6,7,8,9]
 successrate = SimpleVocabulary.fromValues(values)
+
+
+def success_constraint(value):
+    """Check if only one answeroption is true
+    """
+    success = 0
+    for i in value:
+        print(value)
+        if i['bewertung'] in ['richtig', 'success']:
+            success += 1
+    print(success)
+    if success == 0:
+        raise Invalid(u'Bitte markiere eine Antwortoption als richtig.')
+    elif success > 1:
+        raise Invalid(u'Es darf nur eine Antwortoption als richtig markiert werden.')
+    else:
+        return True
 
 
 class IAnswerOptions(model.Schema):
@@ -75,29 +87,17 @@ class ISkill(model.Schema):
                                default=8,
                                required=True)
 
-
-    # url = schema.URI(
-    #     title=_(u'Link'),
-    #     required=False
-    # )
-
-    # fieldset('Images', fields=['logo', 'advertisement'])
-    # logo = namedfile.NamedBlobImage(
-    #     title=_(u'Logo'),
-    #     required=False,
-    # )
-
-    # advertisement = namedfile.NamedBlobImage(
-    #     title=_(u'Advertisement (Gold-sponsors and above)'),
-    #     required=False,
-    # )
-
-    # directives.read_permission(notes='cmf.ManagePortal')
-    # directives.write_permission(notes='cmf.ManagePortal')
-    # notes = RichText(
-    #     title=_(u'Secret Notes (only for site-admins)'),
-    #     required=False
-    # )
+    @invariant
+    def antworten_invariant(data):
+        success = 0
+        for i in data.antworten:
+            if i['bewertung'] in ['richtig', 'success']:
+                success += 1
+        print(success)
+        if success == 0:
+            raise Invalid(u'Bitte markiere eine Antwortoption als richtig.')
+        if success > 1:
+            raise Invalid(u'Es darf nur eine Antwortoption als richtig markiert werden.')
 
 
 @implementer(ISkill)
