@@ -7,8 +7,8 @@
   -*- extra stuff goes here -*-
 
   <browser:page
-    name="skill-view"
-    for="Products.CMFCore.interfaces.IFolderish"
+    name="view"
+    for="edi.skillpill.content.skill.ISkill"
     class=".skill_view.SkillView"
     template="skill_view.pt"
     permission="zope2.View"

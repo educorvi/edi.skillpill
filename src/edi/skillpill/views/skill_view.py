@@ -1,17 +1,26 @@
 # -*- coding: utf-8 -*-
-
+import random
 from edi.skillpill import _
 from Products.Five.browser import BrowserView
+
 
 # from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 
 class SkillView(BrowserView):
-    # If you want to define a template here, please remove the template from
-    # the configure.zcml registration of this view.
-    # template = ViewPageTemplateFile('skill_view.pt')
 
-    def __call__(self):
-        # Implement your own actions:
-        self.msg = _(u'A small message')
-        return self.index()
+    def get_quiz(self):
+        quiz = {}
+        quiz['frage'] = self.context.quizfrage
+        antworten = []
+        for i in self.context.antworten:
+            antworten.append((self.context.antworten.index(i), i.get('antwort')))
+        random.shuffle(antworten)
+        quiz['antworten'] = antworten
+        quiz['image'] = ''
+        if self.context.quizimage:
+            quiz['image'] = "%s/@@images/quizimage" % self.context.absolute_url()
+        return quiz
+
+    def get_action(self):
+        return self.context.absolute_url() + '/validate'

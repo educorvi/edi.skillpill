@@ -1,13 +1,98 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      i18n:domain="edi.skillpill"
-      metal:use-macro="context/main_template/macros/master">
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="example.conference">
 <body>
-  <metal:block fill-slot="content-core">
-      <h2 i18n:translate="">Sample View</h2>
-      <p tal:content="view/msg">this gets replaced</p>
-  </metal:block>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+
+      <div class="container">
+
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+        <h1 class="documentFirstHeading" tal:content="context/title" />
+
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+        <p class="documentDescription" tal:content="context/description" />
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
+        <div class="row">
+          <div class="col-12">
+            <div tal:replace="structure context/text/output"/>
+          </div>
+        </div>
+
+
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+	  Quiz starten
+	</button>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div tal:define="quiz view/get_quiz" class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLabel">Quiz beantworten</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+	      </div>
+
+		<div class="modal-body">
+		  <div class="container-fluid">
+		    <div class="row">
+                      <div class="col-12">
+
+			<!--<div tal:condition="not:quiz/image" class="jumbotron jumbotron-fluid">
+			  <div class="container">
+			    <h3 tal:content="quiz/frage">Fluid jumbotron</h3>
+			  </div>
+			</div>-->
+
+			<div class="card mb-3">
+			  <img tal:condition="quiz/image" src="..." class="card-img-top" alt="..." tal:attributes="src quiz/image;alt context/title">
+			  <div class="card-body">
+			    <h3 class="card-title" tal:content="quiz/frage">Card title</h3>
+			  </div>
+			</div>
+
+                      </div>
+
+		    </div>
+		    <div class="row">
+		      <div class="col-sm-12">
+                        <form tal:attributes="action view/get_action">
+			  <div class="row">
+                            <div tal:repeat="antwort quiz/antworten" class="col-6 mb-1">
+                              <button style="min-height:60px;" type="submit" class="btn btn-info btn-sm btn-block" 
+                                      name="quiz" tal:attributes="value python:antwort[0]" tal:content="python:antwort[1]"></button>
+                            </div>
+			  </div>
+                        </form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+	      <!--<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		<button type="button" class="btn btn-primary">Save changes</button>
+	      </div>-->
+	    </div>
+	  </div>
+	</div>
+
+
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+
+      </div>
+    </tal:main-macro>
+</metal:main>
+
 </body>
 </html>
