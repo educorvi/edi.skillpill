@@ -22,23 +22,6 @@ values = [5,6,7,8,9]
 successrate = SimpleVocabulary.fromValues(values)
 
 
-def success_constraint(value):
-    """Check if only one answeroption is true
-    """
-    success = 0
-    for i in value:
-        print(value)
-        if i['bewertung'] in ['richtig', 'success']:
-            success += 1
-    print(success)
-    if success == 0:
-        raise Invalid(u'Bitte markiere eine Antwortoption als richtig.')
-    elif success > 1:
-        raise Invalid(u'Es darf nur eine Antwortoption als richtig markiert werden.')
-    else:
-        return True
-
-
 class IAnswerOptions(model.Schema):
     antwort = schema.TextLine(title=u"Antwort")
 
@@ -46,7 +29,6 @@ class IAnswerOptions(model.Schema):
                               vocabulary=wertvalues,
                               default='richtig',
                               required=True)
-
 
 class ISkill(model.Schema):
     """ Marker interface and Dexterity Python Schema for Skill
@@ -93,7 +75,6 @@ class ISkill(model.Schema):
         for i in data.antworten:
             if i['bewertung'] in ['richtig', 'success']:
                 success += 1
-        print(success)
         if success == 0:
             raise Invalid(u'Bitte markiere eine Antwortoption als richtig.')
         if success > 1:
