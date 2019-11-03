@@ -6,33 +6,27 @@
 edi.skillpill
 =============
 
-Tell me what your product does
+Skillpill is a ContentType for Plone to publish one skill for readers. Every skill should have a multiple choice question about the content.
+The quiz question will be shown like mobile app "quizduell" in kind of lightning window. After answering the validated answer
+will appear below the skill content.
 
 Features
 --------
 
-- Can be bullet points
+- Slogan: one skill, one quiz, one pill
 
 
 Examples
 --------
 
 This add-on can be seen in action at the following sites:
-- Is there a page on the internet where everybody can see the features?
-
-
-Documentation
--------------
-
-Full documentation for end users can be found in the "docs" folder, and is also available online at http://docs.plone.org/foo/bar
+https://kurs.educorvi.de
 
 
 Translations
 ------------
 
-This product has been translated into
-
-- Klingon (thanks, K'Plai)
+This product is only available in German yet.
 
 
 Installation
@@ -54,16 +48,15 @@ and then running ``bin/buildout``
 Contribute
 ----------
 
-- Issue Tracker: https://github.com/collective/edi.skillpill/issues
-- Source Code: https://github.com/collective/edi.skillpill
-- Documentation: https://docs.plone.org/foo/bar
+- Issue Tracker: https://github.com/educorvi/edi.skillpill/issues
+- Source Code: https://github.com/educorvi/edi.skillpill
 
 
 Support
 -------
 
 If you are having issues, please let us know.
-We have a mailing list located at: project@example.com
+Please send us an email: info@educorvi.de
 
 
 License
