@@ -7,6 +7,13 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="validate"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".validate.Validate"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="view"
     for="edi.skillpill.content.skill.ISkill"
     class=".skill_view.SkillView"
