@@ -27,7 +27,7 @@ class IAnswerOptions(model.Schema):
 
     bewertung = schema.Choice(title=u"Bewertung",
                               vocabulary=wertvalues,
-                              default='richtig',
+                              default='falsch',
                               required=True)
 
 class ISkill(model.Schema):

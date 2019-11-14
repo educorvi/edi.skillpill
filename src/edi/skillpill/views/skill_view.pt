@@ -4,7 +4,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       metal:use-macro="context/main_template/macros/master"
-      i18n:domain="example.conference">
+      i18n:domain="edi.skillpill">
 <body>
 
 <metal:main fill-slot="main">
@@ -12,34 +12,39 @@
 
       <div tal:define="quiz view/get_quiz" class="container">
 
-        <div tal:replace="structure provider:plone.abovecontenttitle" />
-
-        <h1 class="documentFirstHeading" tal:content="context/title" />
-
-        <div tal:replace="structure provider:plone.belowcontenttitle" />
-
-        <p class="documentDescription" tal:content="context/description" />
-
-        <div tal:replace="structure provider:plone.abovecontentbody" />
-
         <div class="row">
-          <div class="col-12">
-            <div tal:replace="structure context/text/output"/>
-          </div>
-        </div>
+
+        <!--<div tal:replace="structure provider:plone.abovecontenttitle" />-->
+
+        <div class="col-sm-1"> </div>
+
+        <div class="col-12 col-sm-10">
+
+	<div class="card mb-3">
+	  <img tal:condition="context/titleimage" class="card-img-top" tal:attributes="src python:context.absolute_url()+'/@@images/titleimage'"
+               alt="Card image cap">
+	  <div class="card-body">
+	    <h5 class="card-title" tal:content="context/title">Card title</h5>
+	    <p class="card-text" tal:content="context/description"></p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseLearnMore" aria-expanded="false" 
+                    aria-controls="collapseLearnMore">Lerne mehr
+            </button>
+            <button tal:condition="not:view/get_validated" type="button" class="btn btn-primary" data-toggle="modal" data-target="#quizModal">
+                    Quiz starten
+            </button>
+	    <div class="collapse mt-3" id="collapseLearnMore">
+              <span tal:replace="structure context/text/output"/>
+            </div>
+	  </div>
+	</div>
 
         <a class="anchor" tal:condition="view/get_validated" id="ergebnis"> </a>
 
-
-	<button tal:condition="not:view/get_validated" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-	  Quiz starten
-	</button>
-
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="quizModal" tabindex="-1" role="dialog" aria-labelledby="quizModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-		<h5 class="modal-title" id="exampleModalLabel">Quiz beantworten</h5>
+		<h5 class="modal-title" id="quizModalLabel">Quiz beantworten</h5>
 		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		  <span aria-hidden="true">&times;</span>
 		</button>
@@ -71,7 +76,7 @@
                         <form tal:attributes="action view/get_action">
 			  <div class="row">
                             <div tal:repeat="antwort quiz/antworten" class="col-6 mb-1">
-                              <button style="min-height:60px;" type="submit" class="btn btn-info btn-sm btn-block" 
+                              <button style="min-height:60px;" type="submit" class="btn btn-secondary btn-sm btn-block" 
                                       tal:attributes="name quiz/uid;value python:antwort[0]" tal:content="python:antwort[1]"></button>
                             </div>
 			  </div>
@@ -104,6 +109,13 @@
         </div>
 
         <div tal:replace="structure provider:plone.belowcontentbody" />
+
+        </div> <!-- Column -->
+
+        <div class="col-sm-1"> </div>
+
+        </div> <!-- Row -->
+
 
       </div>
     </tal:main-macro>
