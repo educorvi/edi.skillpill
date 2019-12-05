@@ -12,7 +12,7 @@
 
       <div tal:define="quiz view/get_quiz" class="container">
 
-        <div class="row">
+        <div class="row mt-n3">
 
         <!--<div tal:replace="structure provider:plone.abovecontenttitle" />-->
 
@@ -26,7 +26,7 @@
 	  <div class="card-body">
 	    <h5 class="card-title" tal:content="context/title">Card title</h5>
 	    <p class="card-text" tal:content="context/description"></p>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseLearnMore" aria-expanded="false" 
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseLearnMore" aria-expanded="false" 
                     aria-controls="collapseLearnMore">Lerne mehr
             </button>
             <button tal:condition="not:view/get_validated" type="button" class="btn btn-primary" data-toggle="modal" data-target="#quizModal">
