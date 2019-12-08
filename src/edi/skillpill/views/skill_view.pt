@@ -21,18 +21,55 @@
         <div class="col-12 col-sm-10">
 
 	<div class="card mb-3">
-	  <img tal:condition="context/titleimage" class="card-img-top" tal:attributes="src python:context.absolute_url()+'/@@images/titleimage'"
+
+
+	  <img tal:condition="view/getTitleimage" class="card-img-top" tal:attributes="src python:context.absolute_url()+'/@@images/titleimage'"
                alt="Card image cap">
+
+	  <div tal:define="datei view/getMedia;filetype python:datei.get('contentType');poster view/getPoster" tal:condition="datei" class="card-img-top">
+		  <div class="col-xs-12 col-sm-12" tal:condition="python: filetype == 'video/mp4'">
+		    <div class="embed-responsive embed-responsive-16by9">
+		      <video class="embed-responsive-item" controls tal:attributes="poster poster/src">
+			<source tal:attributes="src datei/url;" type="video/mp4">
+			Dein Browser kann dieses Video nicht wiedergeben.<br/>
+			Du kannst die Datei unter <a href="#" tal:attributes="href datei/url" tal:content="datei/filename"></a> herunterladen.
+		      </video>
+		    </div>
+		  </div>
+		  <div class="col-xs-12 col-sm-12" tal:condition="python: filetype == 'audio/mpeg'">
+		    <audio src="" tal:attributes="src datei/url;type datei/contentType" controls>
+		      Dein Browser kann diese Tonaufnahme nicht wiedergeben.<br/>
+		      Du kannst die Datei unter <a href="#" tal:attributes="href datei/url" tal:content="datei/filename"></a> herunterladen.
+		    </audio>
+		  </div>
+		  <div class="col-xs-12 col-sm-12" tal:condition="python: filetype != 'video/mp4' and filetype != 'audio/mpeg'">
+		    <a href="" tal:attributes="href datei/url"><span class="glyphicon glyphicon-download"/>
+							      <span tal:content="datei/filename"/>
+							      (<span tal:content="filetype"/> - <span tal:content="datei/size"/>)
+		    </a>
+		  </div>
+	  </div>
+
+	  <div tal:define="embed view/getEmbed" tal:condition="python:not view.getMedia() and embed" class="card-img-top">
+		  <div class="col-xs-12 col-sm-12">
+		    <div class="embed-responsive embed-responsive-16by9">
+		      <div tal:replace="structure embed"/>
+		    </div>
+		  </div>
+          </div>
+
+
 	  <div class="card-body">
 	    <h5 class="card-title" tal:content="context/title">Card title</h5>
 	    <p class="card-text" tal:content="context/description"></p>
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseLearnMore" aria-expanded="false" 
+            <span tal:condition="context/bachelor" tal:replace="structure context/bachelor/output"/>
+            <button tal:condition="context/text" class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseLearnMore" aria-expanded="false" 
                     aria-controls="collapseLearnMore">Lerne mehr
             </button>
             <button tal:condition="not:view/get_validated" type="button" class="btn btn-primary" data-toggle="modal" data-target="#quizModal">
                     Quiz starten
             </button>
-	    <div class="collapse mt-3" id="collapseLearnMore">
+	    <div tal:condition="context/text" class="collapse mt-3" id="collapseLearnMore">
               <span tal:replace="structure context/text/output"/>
             </div>
 	  </div>

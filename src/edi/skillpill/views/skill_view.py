@@ -7,6 +7,12 @@ from collective.beaker.interfaces import ISession
 
 # from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+def sizeof_fmt(num, suffix='Byte'):
+    for unit in ['','k','M','G','T','P','E','Z']:
+        if abs(num) < 1024.0:
+            return "%3.2f %s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.2f %s%s" % (num, 'Y', suffix)
 
 class SkillView(BrowserView):
 
@@ -32,6 +38,40 @@ class SkillView(BrowserView):
             validated = session[uid]['validated']
         return validated
 
-
     def get_action(self):
         return self.context.absolute_url() + '/validate'
+
+    def getMedia(self):
+        datei = {}
+        if self.context.datei:
+            datei = {}
+            datei['url'] = "%s/@@download/datei/%s" %(self.context.absolute_url(), self.context.datei.filename)
+            if self.context.datei.contentType.startswith('audio'):
+                datei['contentType'] = 'audio/mpeg'
+            else:
+                datei['contentType'] = self.context.datei.contentType
+            datei['size'] = sizeof_fmt(self.context.datei.size)
+            datei['filename'] = self.context.datei.filename
+        return datei
+
+    def getEmbed(self):
+        retcode = ''
+        if self.context.embed:
+            retcode = self.context.embed
+        return retcode
+
+    def getPoster(self):
+        image = {}
+        if self.context.titleimage:
+            image['src'] = "%s/@@images/titleimage" % self.context.absolute_url()
+            image['title'] = self.context.titleimage.filename
+        return image
+
+    def getTitleimage(self):
+        ret = False
+        if self.context.titleimage:
+            ret = True
+        if self.context.datei or self.context.embed:
+            ret = False
+        return ret
+
