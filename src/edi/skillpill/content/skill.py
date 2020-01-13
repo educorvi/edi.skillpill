@@ -40,7 +40,7 @@ class ISkill(model.Schema):
          description=u'Beschreibe hier das unbedingt notwendige Grundwissen für den Lernenden. Dieser Text wird dem Lernenden\
                        neben der Kurzbeschreibung direkt unter dem Titelbild angezeigt. Vermeide hier das Hochladen zusätzlicher\
                        Bilder und Dateien.',
-         required=True
+         required=False
     )
          
 
