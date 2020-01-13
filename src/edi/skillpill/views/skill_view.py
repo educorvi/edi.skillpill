@@ -61,7 +61,7 @@ class SkillView(BrowserView):
         return retcode
 
     def getPoster(self):
-        image = {}
+        image = {'src':'', 'title':''}
         if self.context.titleimage:
             image['src'] = "%s/@@images/titleimage" % self.context.absolute_url()
             image['title'] = self.context.titleimage.filename
