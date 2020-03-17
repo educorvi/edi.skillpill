@@ -14,7 +14,7 @@
 
         <div class="row mt-n3">
 
-        <!--<div tal:replace="structure provider:plone.abovecontenttitle" />-->
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
 
         <div class="col-sm-1"> </div>
 
