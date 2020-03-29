@@ -41,6 +41,14 @@ class SkillView(BrowserView):
     def get_action(self):
         return self.context.absolute_url() + '/validate'
 
+    def is_master(self):
+        if self.context.text:
+            if self.context.text.raw == '<!DOCTYPE html>\r\n<html>\r\n<head>\r\n</head>\r\n<body>\r\n\r\n</body>\r\n</html>':
+                return False
+            else:
+                return True
+        return False
+
     def getMedia(self):
         datei = {}
         if self.context.datei:

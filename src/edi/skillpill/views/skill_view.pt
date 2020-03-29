@@ -22,7 +22,6 @@
 
 	<div class="card mb-3">
 
-
 	  <img tal:condition="view/getTitleimage" class="card-img-top" tal:attributes="src python:context.absolute_url()+'/@@images/titleimage'"
                alt="Card image cap">
 
@@ -63,7 +62,7 @@
 	    <h5 class="card-title" tal:content="context/title">Card title</h5>
 	    <p class="card-text" tal:content="context/description"></p>
             <span tal:condition="context/bachelor" tal:replace="structure context/bachelor/output"/>
-            <button tal:condition="context/text" class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseLearnMore" aria-expanded="false" 
+            <button tal:condition="view/is_master" class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseLearnMore" aria-expanded="false" 
                     aria-controls="collapseLearnMore">Lerne mehr
             </button>
             <button tal:condition="not:view/get_validated" type="button" class="btn btn-primary" data-toggle="modal" data-target="#quizModal">
