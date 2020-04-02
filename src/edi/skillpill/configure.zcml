@@ -46,4 +46,10 @@
 
   <include package=".views" />
 
+  <subscriber
+    for="edi.skillpill.content.skill.ISkill
+       zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+    handler=".events.CleanHtml"
+  />
+
 </configure>

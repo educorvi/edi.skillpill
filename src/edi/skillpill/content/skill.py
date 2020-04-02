@@ -21,7 +21,6 @@ wertvalues = SimpleVocabulary(
 values = [5,6,7,8,9]
 successrate = SimpleVocabulary.fromValues(values)
 
-
 class IAnswerOptions(model.Schema):
     antwort = schema.TextLine(title=u"Antwort")
 
@@ -36,7 +35,7 @@ class ISkill(model.Schema):
 
 
     bachelor = RichText(
-         title=u'Bachelor-Skill',
+         title=u'Bachelor-Skill - das muss der Lernende wissen',
          description=u'Beschreibe hier das unbedingt notwendige Grundwissen für den Lernenden. Dieser Text wird dem Lernenden\
                        neben der Kurzbeschreibung direkt unter dem Titelbild angezeigt. Vermeide hier das Hochladen zusätzlicher\
                        Bilder und Dateien.',
@@ -45,8 +44,8 @@ class ISkill(model.Schema):
          
 
     text = RichText(
-         title=u'Master-Skill',
-         description=u'Beschreibe hier zusätliches Wissen für den Lernenden. Bei Bedarf kannst Du Bilder oder Dateien\
+         title=u'Master-Skill - das könnte der Lernende wissen',
+         description=u'Beschreibe hier zusätzliches Wissen für den Lernenden. Bei Bedarf kannst Du Bilder oder Dateien\
                        hochladen und in den Text einbinden. Schreibe so kurz und präzise wie möglich und so ausführlich\
                        wie nötig.',
          required=False
@@ -59,18 +58,18 @@ class ISkill(model.Schema):
                                 description = u"Formuliere hier eine Quizfrage zu den Inhalten des Skills",
                                 required = True)
 
+    directives.widget(antworten = DataGridFieldFactory)
+    antworten = schema.List(title=u"Antwortoptionen für die Quizfrage (Markieren Sie eine Antwortoption als richtig).",
+                            required=True,
+                            min_length=4,
+                            max_length=4,
+                            value_type=DictRow(title=u"Optionen", schema=IAnswerOptions))
+
     quizimage = NamedBlobImage(title = u"Bild zur Quizfrage",
                                description = u"Wenn zur Quizfrage ein Bild angezeigt werden soll kannst Du es hier\
                                hochladen. Achte darauf, dass das Motiv klar erkennbar ist und das Bild auch für die\
                                Anzeige auf einem SmartPhone geeignet ist.",
                                required = False)
-
-    directives.widget(antworten = DataGridFieldFactory)
-    antworten = schema.List(title=u"Antwortoptionen für Quizfrage",
-                            required=True,
-                            min_length=4,
-                            max_length=4,
-                            value_type=DictRow(title=u"Optionen", schema=IAnswerOptions))
 
     difficulty = schema.Choice(title=u"Erfolgsrate der Quizfrage",
                                description=u"Gib hier an, wieviele von 10 Schülern nach Deiner Einschätzung die Frage richtig beantworten.\
@@ -100,13 +99,14 @@ class ISkill(model.Schema):
     @invariant
     def antworten_invariant(data):
         success = 0
-        for i in data.antworten:
-            if i['bewertung'] in ['richtig', 'success']:
-                success += 1
-        if success == 0:
-            raise Invalid(u'Bitte markiere eine Antwortoption als richtig.')
-        if success > 1:
-            raise Invalid(u'Es darf nur eine Antwortoption als richtig markiert werden.')
+        if 'antworten' in data.__dict__:
+            for i in data.antworten:
+                if i['bewertung'] in ['richtig', 'success']:
+                   success += 1
+            if success == 0:
+                raise Invalid(u'Bitte markiere eine Antwortoption als richtig.')
+            if success > 1:
+                raise Invalid(u'Es darf nur eine Antwortoption als richtig markiert werden.')
 
 
 @implementer(ISkill)
