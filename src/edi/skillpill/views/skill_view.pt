@@ -5,6 +5,7 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="edi.skillpill">
+
 <body>
 
 <metal:main fill-slot="main">
@@ -91,12 +92,6 @@
 		    <div class="row">
                       <div class="col-12">
 
-			<!--<div tal:condition="not:quiz/image" class="jumbotron jumbotron-fluid">
-			  <div class="container">
-			    <h3 tal:content="quiz/frage">Fluid jumbotron</h3>
-			  </div>
-			</div>-->
-
 			<div class="card mb-3">
 			  <img tal:condition="quiz/image" class="card-img-top" tal:attributes="src quiz/image;alt context/title">
 			  <div class="card-body">
@@ -151,6 +146,11 @@
         <div class="col-sm-1"> </div>
 
         </div> <!-- Row -->
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
 
 
       </div>
