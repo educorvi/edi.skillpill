@@ -60,7 +60,7 @@
 
 
 	  <div class="card-body">
-	    <h5 class="card-title" tal:content="context/title">Card title</h5>
+	    <h1 class="card-title" tal:content="context/title">Card title</h1>
 	    <p class="card-text" tal:content="context/description"></p>
             <span tal:condition="context/bachelor" tal:replace="structure context/bachelor/output"/>
             <button tal:condition="view/is_master" class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseLearnMore" aria-expanded="false" 
