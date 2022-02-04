@@ -51,15 +51,16 @@ class SkillView(BrowserView):
 
     def getMedia(self):
         datei = {}
-        if self.context.datei:
-            datei = {}
-            datei['url'] = "%s/@@download/datei/%s" %(self.context.absolute_url(), self.context.datei.filename)
-            if self.context.datei.contentType.startswith('audio'):
-                datei['contentType'] = 'audio/mpeg'
-            else:
-                datei['contentType'] = self.context.datei.contentType
-            datei['size'] = sizeof_fmt(self.context.datei.size)
-            datei['filename'] = self.context.datei.filename
+        if self.context.dateiref:
+            if self.context.dateiref.to_object:
+                fileobj = self.context.dateiref.to_object
+                datei['url'] = "%s/@@download/file/%s" %(fileobj.absolute_url(), fileobj.file.filename)
+                if fileobj.file.contentType.startswith('audio'):
+                    datei['contentType'] = 'audio/mpeg'
+                else:
+                    datei['contentType'] = fileobj.file.contentType
+                datei['size'] = sizeof_fmt(fileobj.file.size)
+                datei['filename'] = fileobj.file.filename
         return datei
 
     def getEmbed(self):
@@ -79,7 +80,7 @@ class SkillView(BrowserView):
         ret = False
         if self.context.titleimage:
             ret = True
-        if self.context.datei or self.context.embed:
+        if self.context.dateiref or self.context.embed:
             ret = False
         return ret
 

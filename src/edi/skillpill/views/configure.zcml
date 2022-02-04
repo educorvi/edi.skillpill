@@ -21,5 +21,11 @@
     permission="zope2.View"
     />
 
+  <browser:viewlet
+    name="edi.skillpill.vorzurueck"
+    manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
+    class="plone.app.layout.nextprevious.view.NextPreviousViewlet"
+    permission="zope2.View"
+    />
 
 </configure>

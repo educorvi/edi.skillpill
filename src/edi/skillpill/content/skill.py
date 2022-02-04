@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from plone.app.multilingual.browser.interfaces import make_relation_root_path
 from zope.interface import Interface
 from plone.app.textfield import RichText
 from collective.z3cform.datagridfield import DataGridFieldFactory
@@ -7,6 +8,8 @@ from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from plone.autoform import directives
 from plone.dexterity.content import Container
 from plone.namedfile.field import NamedBlobImage, NamedBlobFile
+from z3c.relationfield.schema import RelationChoice
+from plone.app.z3cform.widget import RelatedItemsFieldWidget
 from plone.supermodel import model
 from zope import schema
 from zope.interface import implementer
@@ -81,14 +84,30 @@ class ISkill(model.Schema):
     model.fieldset(
         'audiovideo',
         label=u"Audio/Video",
-        fields=['datei', 'embed']
+        fields=['dateiref', 'embed']
     )
 
-    datei = NamedBlobFile(title=u"Audio- oder Video-Datei",
-                          description=u"Hier hast Du die Möglichkeit zum Hochladen einer Audiodatei im *.mp3 Format oder Videodatai im *.mp4 Format.\
-                                        Das Video wird direkt auf der Startseite des Skills angezeigt. Für Videos solltest Du zusätzlich ein\
-                                        Titelbild hochladen, das dann als Poster für das Video verwendet werden kann.",
-                          required=False)
+    #datei = NamedBlobFile(title=u"Audio- oder Video-Datei",
+    #                      description=u"Hier hast Du die Möglichkeit zum Hochladen einer Audiodatei im *.mp3 Format oder Videodatai im *.mp4 Format.\
+    #                                    Das Video wird direkt auf der Startseite des Skills angezeigt. Für Videos solltest Du zusätzlich ein\
+    #                                    Titelbild hochladen, das dann als Poster für das Video verwendet werden kann.",
+    #                      required=False)
+
+    dateiref = RelationChoice(
+        title=u"Referenz auf Videodatei",
+        description=u"Hier können Sie eine Referenz auf eine bereits vorhandene Videodatei eintragen.", 
+        vocabulary='plone.app.vocabularies.Catalog',
+        required=False,
+    )
+
+    directives.widget(
+        "dateiref",
+        RelatedItemsFieldWidget,
+        pattern_options={
+            "selectableTypes": ["File"],
+            "basePath": make_relation_root_path,
+        },
+    )
 
     embed = schema.Text(title=u"Einbettungscode einer Videoplattform",
                         description=u"Als Alternative zur Datei kann hier der Einbettungscode einer Videoplattform\
