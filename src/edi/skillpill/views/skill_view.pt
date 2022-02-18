@@ -118,9 +118,9 @@
 	  </div>
 	</div>
 
-        <div tal:define="validated view/get_validated" tal:condition="validated" class="row">
-          <div class="col-sm-5 col-12">
-
+        <div tal:define="validated view/get_validated" tal:condition="validated" class="row mt-4 mb-4">
+          <div class="col-12">
+                <h2>Quizergebnis</h2>
 		<div class="card">
                   <img tal:condition="quiz/image" class="card-img-top" tal:attributes="src quiz/image;alt context/title">
 		  <div class="card-body">
