@@ -11,11 +11,9 @@
       layer="edi.skillpill.interfaces.IEdiSkillpillLayer"
       />
 
-  <!-- Publish static files -->
-  <plone:static
+  <browser:resourceDirectory
       name="edi.skillpill"
-      type="plone"
-      directory="static"
+      directory="static" 
       />
 
 </configure>

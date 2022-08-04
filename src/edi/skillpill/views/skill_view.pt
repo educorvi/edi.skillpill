@@ -59,7 +59,10 @@
 
 	  <div class="card-body">
 	    <h1 class="card-title" tal:content="context/title">Card title</h1>
-	    <p class="card-text" tal:content="context/description"></p>
+            <p tal:condition="context/description" class="lead mt-5">
+              <img class="icon" src="/++resource++edi.skillpill/dot.svg">
+              <span tal:content="context/description"/>
+            </p>
             <span tal:condition="context/bachelor" tal:replace="structure context/bachelor/output"/>
             <button tal:condition="view/is_master" class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseLearnMore" aria-expanded="false" 
                     aria-controls="collapseLearnMore">Lerne mehr
