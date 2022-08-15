@@ -74,6 +74,14 @@
               <span tal:replace="structure context/text/output"/>
             </div>
 	  </div>
+	  <div tal:condition="view/getAufgaben" class="card-footer">
+            <h2>Aufgaben zu diesem Skill</h2>		  
+            <ul>
+              <li tal:repeat="aufgabe view/getAufgaben">
+	        <a tal:attributes="href aufgabe/url" tal:content="aufgabe/title"/>
+              </li>
+	    </ul>
+	  </div>
 	</div>
 
         <a class="anchor" tal:condition="view/get_validated" id="ergebnis"> </a>

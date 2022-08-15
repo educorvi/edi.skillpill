@@ -83,3 +83,13 @@ class SkillView(BrowserView):
             ret = False
         return ret
 
+    def getAufgaben(self):
+        aufgaben = []
+        fc = self.context.getFolderContents()
+        for entry in fc:
+            if entry.portal_type == 'Aufgabe':
+                aufgabe = {}
+                aufgabe['url'] = entry.getURL()
+                aufgabe['title'] = entry.Title
+                aufgaben.append(aufgabe)
+        return aufgaben

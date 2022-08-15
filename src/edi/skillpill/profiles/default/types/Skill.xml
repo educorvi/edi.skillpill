@@ -23,6 +23,7 @@
   <property name="allowed_content_types">
     <element value="Image" />
     <element value="File" />
+    <element value="Aufgabe" />
   </property>
   <!-- Schema, class and security -->
   <property name="add_permission">edi.skillpill.AddSkill</property>
