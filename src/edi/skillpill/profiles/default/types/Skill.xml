@@ -44,7 +44,6 @@
     <element value="plone.categorization"/>
     <element value="plone.basic"/>
     <element value="plone.locking" />
-    <element value="collective.immediatecreate" />
     <!--<element value="plone.app.referenceablebehavior.referenceable.IReferenceable" />-->
     <!--<element value="plone.leadimage"/>-->
     <!--<element value="plone.relateditems"/>-->
@@ -59,7 +58,7 @@
   </property>
 
   <!-- View information -->
-  <property name="add_view_expr">string:${folder_url}/++addimmediate++Skill</property>
+  <property name="add_view_expr">string:${folder_url}/++add++Skill</property>
   <property name="default_view">view</property>
   <property name="default_view_fallback">False</property>
   <property name="immediate_view">view</property>

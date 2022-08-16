@@ -56,7 +56,6 @@ setup(
         'plone.app.dexterity',
         'collective.z3cform.datagridfield',
         'collective.beaker',
-        'collective.immediatecreate',
     ],
     extras_require={
         'test': [
